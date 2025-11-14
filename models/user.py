@@ -1,14 +1,18 @@
 import json
+import uuid
 import os
 from dataclasses import dataclass, asdict
 from typing import List
 
-DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath__file__), '..', 'data')
+
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)
 
 class User:
-    def __init__(self, id, name, email, birthdate):
-        self.id = id
-        self.name = name
+    def __init__(self, nome: str, email: str, senha: str, apartamento: str, tipo: str = 'morador', user_id: str = None):
+        self.id = user_id if user_id else str(uuid.uuid4())
+        self.nome = name
         self.email = email
         self.birthdate = birthdate
 
