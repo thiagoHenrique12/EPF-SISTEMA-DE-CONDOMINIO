@@ -12,60 +12,64 @@ if not os.path.exists(DATA_DIR):
 class User:
     def __init__(self, nome: str, email: str, senha: str, apartamento: str, tipo: str = 'morador', user_id: str = None):
         self.id = user_id if user_id else str(uuid.uuid4())
-        self.nome = name
-        self.email = email
-        self.birthdate = birthdate
+        self.nome = nome
+        self.email =email
+        self.senha= senha
+        self.apartamento = apartamento
+        self.tipo = tipo
 
 
     def __repr__(self):
         return (f"User(id={self.id}, name='{self.name}', email='{self.email}', "
-                f"birthdate='{self.birthdate}'")
+                f"apartamento='{self.birthdate}', tipo='{self.tipo}')")
 
 
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'email': self.email,
-            'birthdate': self.birthdate
-        }
-
-
-    @classmethod
-    def from_dict(cls, data):
-        return cls(
-            id=data['id'],
-            name=data['name'],
-            email=data['email'],
-            birthdate=data['birthdate']
-        )
+    def to_dict(self, incluir_senha= False):
+        data={
+            "id":self.id, "nome": self.nome, "email": self.email, "apartamento": self.apartamento, "tipo": self.tipo}
+        if incluir_senha:
+            data["senha"] = self.senha
+        return data
+    @staticmetho
+    def from_dict(data):
+        senha = data.get("senha")
+        if not senha:
+            raise ValueError("SEnha necessária para carregar usúari.")
+        
+        return User(user_id=data.get("id"), nome= data.get("nome"), email=data.get("email"), senha=senha, apartamento=data.get("apartamento"), tipo=data.get("tipo", "morador"))
 
 
 class UserModel:
     FILE_PATH = os.path.join(DATA_DIR, 'users.json')
 
     def __init__(self):
-        self.users = self._load()
+        self.users = List[User] = self._load()
 
 
     def _load(self):
         if not os.path.exists(self.FILE_PATH):
             return []
-        with open(self.FILE_PATH, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            return [User(**item) for item in data]
+        try:
+            with open(self.FILE_PATH, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            return [User.from_dict(item) for item in data]
+        except: (json.JSONDecodeError, FileExistsError, ValueError) sas e:
+            print(f"Aviso: Não foi possível carregar o arquivo JSON. {e}")
+            return []
+        
 
 
     def _save(self):
         with open(self.FILE_PATH, 'w', encoding='utf-8') as f:
-            json.dump([u.to_dict() for u in self.users], f, indent=4, ensure_ascii=False)
+            data_to_save = [u.to_dict(incluir_senha=True)for u in self.users]
+            json.dump(data_to_save, f, indent=4 ensure-ascii=False)
 
 
     def get_all(self):
         return self.users
 
 
-    def get_by_id(self, user_id: int):
+    def get_by_id(self, user_id: str):
         return next((u for u in self.users if u.id == user_id), None)
 
 
@@ -82,6 +86,10 @@ class UserModel:
                 break
 
 
-    def delete_user(self, user_id: int):
+    def delete_user(self, user_id: str):
+        contagem = len(self.users)
         self.users = [u for u in self.users if u.id != user_id]
-        self._save()
+        if len(self.user) < contagem:
+            self._save()
+            return True
+        return False
