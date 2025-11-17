@@ -9,35 +9,39 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data'
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 
+
+# necessario implementar o encapsulamento e fazer os getters e setters
 class User:
-    def __init__(self, nome: str, email: str, senha: str, apartamento: str, tipo: str = 'morador', user_id: str = None):
+    def __init__(self, nome: str, email: str, senha: str, user_id: str = None):
         self.id = user_id if user_id else str(uuid.uuid4())
         self.nome = nome
         self.email =email
-        self.senha= senha
-        self.apartamento = apartamento
-        self.tipo = tipo
+        self.__senha= senha
 
+        @property               #isso é um decorator que transforma um metodo em atributo
+        def senha(self):
+            return self.__senha
+        #isso aq é como se fosse um get disfarçado, toda vez que tentar passar a vriavel senha ao inves de buscar a variavel 
+        # o python vai buscar esse metodo 
 
     def __repr__(self):
-        return (f"User(id={self.id}, nome='{self.nome}', email='{self.email}', "
-                f"apartamento='{self.apartamento}', tipo='{self.tipo}')")
+        return (f"User(id={self.id}, nome='{self.nome}', email='{self.email}', ")
 
 
     def to_dict(self, incluir_senha= False):
         data={
-            "id":self.id, "nome": self.nome, "email": self.email, "apartamento": self.apartamento, "tipo": self.tipo}
+            "id":self.id, "nome": self.nome, "email": self.email }
         if incluir_senha:
-            data["senha"] = self.senha
+            data["senha"] = self.senha  # estamos aplicando o decorator aqui, por exemplo
         return data
+    
     @staticmethod
-
     def from_dict(data):
         senha = data.get("senha")
         if not senha:
             raise ValueError("SEnha necessária para carregar usúari.")
         
-        return User(user_id=data.get("id"), nome= data.get("nome"), email=data.get("email"), senha=senha, apartamento=data.get("apartamento"), tipo=data.get("tipo", "morador"))
+        return User(user_id=data.get("id"), nome= data.get("nome"), email=data.get("email"), senha=senha)
 
 
 class UserModel:
@@ -95,3 +99,23 @@ class UserModel:
             self._save()
             return True
         return False
+
+
+# HERANÇAS
+
+class Morador(User):
+    def __init__(self, nome : str, email : str, senha : str, apartamento: str, user_id :str = None):
+        super().__init__(nome, email, senha, user_id)
+        self.apartamento = apartamento
+    
+    def to_dict(self, incluir_senha=False):
+        data = super().to_dict(incluir_senha)
+        data["apartamento"] = self.apartamento
+        data["tipo"] = 'morador'  
+        return data
+    
+    def __repr__(self):
+        return (f"User(id={self.id}, nome='{self.nome}', email='{self.email}', apartamento={self.apartamento}")
+    
+class Sindico(User):
+    ...
