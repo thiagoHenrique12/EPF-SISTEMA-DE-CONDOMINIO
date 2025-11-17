@@ -4,7 +4,7 @@ import os
 from dataclasses import dataclass, asdict
 from typing import List
 
-DATA_DIR = os.path.join(os.path.dirname(os.path.abspath__file__), '..', 'data')
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data')
 
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
@@ -20,8 +20,8 @@ class User:
 
 
     def __repr__(self):
-        return (f"User(id={self.id}, name='{self.name}', email='{self.email}', "
-                f"apartamento='{self.birthdate}', tipo='{self.tipo}')")
+        return (f"User(id={self.id}, nome='{self.nome}', email='{self.email}', "
+                f"apartamento='{self.apartamento}', tipo='{self.tipo}')")
 
 
     def to_dict(self, incluir_senha= False):
@@ -30,7 +30,8 @@ class User:
         if incluir_senha:
             data["senha"] = self.senha
         return data
-    @staticmetho
+    @staticmethod
+
     def from_dict(data):
         senha = data.get("senha")
         if not senha:
@@ -53,8 +54,9 @@ class UserModel:
             with open(self.FILE_PATH, 'r', encoding='utf-8') as f:
                 data = json.load(f)
             return [User.from_dict(item) for item in data]
-        except: (json.JSONDecodeError, FileExistsError, ValueError) sas e:
-            print(f"Aviso: Não foi possível carregar o arquivo JSON. {e}")
+        
+        except (json.JSONDecodeError, FileExistsError, ValueError) as e:
+            print(f"Aviso: Não foi possível carregar o arquivo JSON.\n ERRO: {e}")
             return []
         
 
@@ -62,7 +64,7 @@ class UserModel:
     def _save(self):
         with open(self.FILE_PATH, 'w', encoding='utf-8') as f:
             data_to_save = [u.to_dict(incluir_senha=True)for u in self.users]
-            json.dump(data_to_save, f, indent=4 ensure-ascii=False)
+            json.dump(data_to_save, f, indent=4, ensure_ascii=False)
 
 
     def get_all(self):
@@ -89,7 +91,7 @@ class UserModel:
     def delete_user(self, user_id: str):
         contagem = len(self.users)
         self.users = [u for u in self.users if u.id != user_id]
-        if len(self.user) < contagem:
+        if len(self.users) < contagem:
             self._save()
             return True
         return False
