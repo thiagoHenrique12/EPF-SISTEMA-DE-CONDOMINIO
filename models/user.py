@@ -127,5 +127,3 @@ class Sindico(User):
                f"Autor: Síndico {self.nome}\n"
                f"{mensagem}\n"
                f"Muito obrigado e tenham um bom dia!")
-
-class Portaria(User)
