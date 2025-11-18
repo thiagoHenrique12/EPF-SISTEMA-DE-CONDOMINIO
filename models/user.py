@@ -105,18 +105,27 @@ class UserModel:
 
 class Morador(User):
     def __init__(self, nome : str, email : str, senha : str, apartamento: str, user_id :str = None):
-        super().__init__(nome, email, senha, user_id)
-        self.apartamento = apartamento
-    
-    def to_dict(self, incluir_senha=False):
-        data = super().to_dict(incluir_senha)
-        data["apartamento"] = self.apartamento
-        data["tipo"] = 'morador'  
-        return data
-    
-    def __repr__(self):
-        return (f"User(id={self.id}, nome='{self.nome}', email='{self.email}', apartamento={self.apartamento}")
+        super().__init__(nome, email, senha, apartamento, UserRole.MORADOR.value, user_id)
+
+    @staticmethod
+    def from_dict(data):
+        return Morador(uder_id =data.get("id"), nome= data.get("nome"), email=data.get("email"), senha=data.get("senha"),
+        apartamento= data.get("apartamento"))
+
     
 class Sindico(User):
-    def __init__(self, nome)
-    ...
+    def __init__(self, nome: str, email: str, senha: str, apartamento: str, user_id: str = None):
+        super().__init__(nome, email, senha, apartamento, UserRole.SINDICO.value, user_id)
+    
+    @staticmethod
+    def from_dict(data):
+        return Sindico(uder_id =data.get("id"), nome= data.get("nome"), email=data.get("email"), senha=data.get("senha"),
+        apartamento= data.get("apartamento"))
+    
+    def emitir_comunicado(self, titulo: str, mensagem: str):
+        return(f"COMUNICADO DO CONDOMÍNIO\n"
+               f"Autor: Síndico {self.nome}\n"
+               f"{mensagem}\n"
+               f"Muito obrigado e tenham um bom dia!")
+
+class Portaria(User)
