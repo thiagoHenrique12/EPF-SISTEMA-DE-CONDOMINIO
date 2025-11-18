@@ -118,4 +118,5 @@ class Morador(User):
         return (f"User(id={self.id}, nome='{self.nome}', email='{self.email}', apartamento={self.apartamento}")
     
 class Sindico(User):
+    def __init__(self, nome)
     ...
