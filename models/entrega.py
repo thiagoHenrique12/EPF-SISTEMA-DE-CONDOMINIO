@@ -31,7 +31,8 @@ class Entrega:
     
     def __rept__(self):
         status = "Entregue" if self.retirada else "Pendente"
-        return (f"Entrega(id="{self.id}", desc="{self.descricao}", "f"morador="{self.morador_id}", status="{status}")")
+        return f"Entrega(id={self.id}, desc={self.descricao}, morador={self.morador_id}, status={status})"
+
 
     def to_dict(self):
         return {'id': self.id,'descricao': self.descricao,'morador_id': self.morador_id, 'data_chegada': self.data_chegada,
