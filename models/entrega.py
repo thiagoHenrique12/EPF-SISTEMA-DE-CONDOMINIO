@@ -12,15 +12,16 @@ if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 
 class Entrega:
-    def __init__(self, descricao: str, morador_id: str, data_chegada: str = None, retirada: str=None, entrega: str= None):
-        self.id = entrega_id if entrega_id else str(uuid.uuid4())
+    def __init__(self, entrega_id: str, descricao: str, morador_id: str, 
+                 data_chegada: str = None, retirada: str=None, entrega: str= None):
+        self.entrega_id = entrega_id if entrega_id else str(uuid.uuid4())
         self.descricao = descricao
         self.morador_id = morador_id
 
         if data_chegada:
             self.data_chegada = data_chegada
         else:
-            self.data_chegada = datatime.now().strftime("%Y-%m-%d %H:%M:%S")
+            self.data_chegada = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.retirada
 
     def registrar_retirada(self):
@@ -97,7 +98,7 @@ class EntregaModel:
 
     def delete_entrega(self, entrega_id: str):
         initial_len = len(self.entregas)
-        self.entregas= [e for e in self.entregas if e.id != entregas_id]
+        self.entregas= [e for e in self.entregas if e.id != entrega_id]
         if len(self.entregas) < initial_len:
             self.__save()
             return True
