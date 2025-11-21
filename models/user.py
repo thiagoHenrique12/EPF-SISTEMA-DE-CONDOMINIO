@@ -3,7 +3,7 @@ import uuid
 import os
 from dataclasses import dataclass, asdict
 from typing import List
-from abc import ABC
+from abc import ABC, abstractmethod
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data')
 
@@ -19,10 +19,17 @@ class User(ABC):
         self.email =email
         self.__senha= senha
 
-        @property              
-        def senha(self):
-            return self.__senha
-        
+    @property              
+    def senha(self):
+        return self.__senha
+    
+    def verificar_senha(self, senha_digitada: str) :
+        return self.__senha == senha_digitada
+    
+    @abstractmethod 
+    def get_tipo(self): #metodo abstrato que vai obrigar as classes filhas a terem ele tambem
+        pass
+    
     def __repr__(self):
         return (f"User(id={self.id}, nome='{self.nome}', email='{self.email}', ")
 
@@ -33,8 +40,6 @@ class User(ABC):
         if incluir_senha:
             data["senha"] = self.senha 
         return data
-    
-
 
 # HERANÇAS
 
@@ -140,6 +145,9 @@ class UserModel:
     def get_all(self):
         return self.users
 
+    def get_by_email(self, email :str):
+        return next((u for u in self.users if u.email == email), None)
+    
 
     def get_by_id(self, user_id: str):
         return next((u for u in self.users if u.id == user_id), None)

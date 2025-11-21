@@ -39,7 +39,7 @@ class Reserva:
 
     def __repr__(self):
             return (f"Reserva(id='{self.id}', recurso='{self.recurso}', "
-                f"morador='{self.mrador_id}', inicio='{self.data_inicio}', status='{self.status}')"))
+                f"morador='{self.mrador_id}', inicio='{self.data_inicio}', status='{self.status}')")
     
     def to_dict(self):
          return{"id": self.id, "recurso": self.recurso, "morado_id": self.morador_id, "data_inicio": self.data_inicio,

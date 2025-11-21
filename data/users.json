@@ -1,8 +1,10 @@
 [
     {
         "id": 1,
-        "name": "UsuÃ¡rio Teste",
-        "email": "uduarioteste@email.com",
-        "birthdate": "1999-10-21"
+        "nome": "usuario Teste",
+        "email": "primeiroUsuario@email.com",
+        "senha": "senha",
+        "tipo": "morador",
+        "apartamento": "101"
     }
 ]
