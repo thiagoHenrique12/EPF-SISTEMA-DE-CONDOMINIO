@@ -56,23 +56,16 @@ class Morador(User):
         data["apartamento"] = self.apartamento
         return data
 
-    # @staticmethod
-    # def from_dict(data):
-    #     return Morador(uder_id =data.get("id"), nome= data.get("nome"), email=data.get("email"), senha=data.get("senha"),
-    #     apartamento= data.get("apartamento"))
-
+  
     
 class Sindico(User):
     def __init__(self, nome: str, email: str, senha: str, apartamento: str, user_id: str = None):
-        super().__init__(nome, email, senha, apartamento, user_id)
+        super().__init__(nome, email, senha, user_id)
+        self.apartamento = apartamento
     
     def get_tipo(self) :
         return "sindico"
     
-    # @staticmethod
-    # def from_dict(data):
-    #     return Sindico(user_id =data.get("id"), nome= data.get("nome"), email=data.get("email"), senha=data.get("senha"),
-    #     apartamento= data.get("apartamento"))
 
     def to_dict(self, incluir_senha=False):
         data = super().to_dict(incluir_senha)
@@ -135,7 +128,6 @@ class UserModel:
             print(f"Aviso: Não foi possível carregar o arquivo JSON.\n ERRO: {e}")
             return []
         
-
 
     def _save(self):
         with open(self.FILE_PATH, 'w', encoding='utf-8') as f:

@@ -1,4 +1,4 @@
-%rebase('layout', title='Usuários')
+% rebase('layout.tpl', title='Gestão de Usuários')
 
 <section class="users-section">
     <div class="section-header">
@@ -10,34 +10,34 @@
 
     <div class="table-container">
         <table class="styled-table">
-            
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Email</th>
-                    <th>Data Nasc.</th>
+                    <th>Tipo</th>
+                    <th>Apto</th>
                     <th>Ações</th>
                 </tr>
             </thead>
-
             <tbody>
                 % for u in users:
                 <tr>
                     <td>{{u.id}}</td>
-                    <td>{{u.name}}</td>
+                    <td>{{u.nome}}</td>
                     <td><a href="mailto:{{u.email}}">{{u.email}}</a></td>
-                    <td>{{u.birthdate}}</td>
+                    <td>{{u.get_tipo().upper()}}</td>
+                    <td>
+                        {{u.apartamento if hasattr(u, 'apartamento') else '-'}}
+                    </td>
                     
                     <td class="actions">
                         <a href="/users/edit/{{u.id}}" class="btn btn-sm btn-edit">
-                            <i class="fas fa-edit"></i> Editar
+                            Editar
                         </a>
-
-                        <form action="/users/delete/{{u.id}}" method="post" 
-                              onsubmit="return confirm('Tem certeza?')">
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash-alt"></i> Excluir
+                        <form action="/users/delete/{{u.id}}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza?')">
+                                Excluir
                             </button>
                         </form>
                     </td>

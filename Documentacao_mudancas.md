@@ -1,5 +1,6 @@
 Este documento tem a finalidade de ir documentando as atualizações e mudanças de codigo dentro do projeto 
 
+#Mudanças
 
 ## USER:
 
@@ -15,4 +16,12 @@ quando jogarmos os dados no json vamos precisar de uma forma de decifrar à qual
 #### Problema:
 Seguindo como consequência, agora dentro de UserModel, no método load, cada umas das classes filhas está sendo instanciada através de um if relacionado ao tipo. O problema disso é que se por acaso eu criarmos uma nova classe Porteiro, vai ser preciso ir dentro de load e fazer toda uma nova logica para if tipo =='porteiro': Porteiro()... .Isso vai deixar o codigo pouco funcionou e engessado mas acho que vai funcionar. (É feio mas funciona)
     Pesquisando o gpt deu uma solução usando um conceito de Introspecção de Classes (talvez no futuro vale a pena ver, agora acho melhor seguir com o que tem) 
+
+### método load:
+O codigo do template assumia que todo usuario no json era igual e aplicava um metodo from_dict para ler os dados e instanciar um objeto da classe User. Essa lógica foi movida para o método load na classe UserModel, esse método vai verificar o tipo do usuario no json e instanciar o objeto desejado
+
+## User_Services:
+### metodo save:
+Esse metodo precisou ser alterado pelo mesmo motivo do load, agora nosso código trabalha com diferentes tipos de usuário, portanto ele precisa saber qual ele deve instanciar *(até o momento os atributos de ambos os tipos são os mesmos mas isso provavelmente vai mudar)*.
+
     
