@@ -1,1 +1,10 @@
-[]
+[
+    {
+        "id": "85d97a3e-b843-492c-904e-6a88c400f4e0",
+        "nome": "Thiago Henrique ",
+        "email": "thiagohenriquems12@gmail.com",
+        "tipo": "morador",
+        "senha": "12e2",
+        "apartamento": "103"
+    }
+]

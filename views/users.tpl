@@ -16,25 +16,32 @@
                     <th>Nome</th>
                     <th>Email</th>
                     <th>Tipo</th>
-                    <th>Apto</th>
-                    <th>Ações</th>
+                    <th>Detalhes</th> <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
+                <tbody>
                 % for u in users:
                 <tr>
                     <td>{{u.id}}</td>
                     <td>{{u.nome}}</td>
                     <td><a href="mailto:{{u.email}}">{{u.email}}</a></td>
+                    
                     <td>{{u.get_tipo().upper()}}</td>
+                    
                     <td>
-                        {{u.apartamento if hasattr(u, 'apartamento') else '-'}}
+                        % if u.get_tipo() == 'morador':
+                            <span>🏠 Apto: {{u.apartamento}}</span>
+                        % elif u.get_tipo() == 'porteiro':
+                            <span>🕒 Turno: {{u.turno}}</span>
+                        % end
                     </td>
                     
                     <td class="actions">
-                        <a href="/users/edit/{{u.id}}" class="btn btn-sm btn-edit">
+                        <a href="/users/edit/{{u.id}}" class="btn btn-sm btn-warning">
                             Editar
                         </a>
+                        
                         <form action="/users/delete/{{u.id}}" method="post" style="display:inline;">
                             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza?')">
                                 Excluir

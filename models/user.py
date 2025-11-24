@@ -58,24 +58,24 @@ class Morador(User):
 
   
     
-class Sindico(User):
-    def __init__(self, nome: str, email: str, senha: str, apartamento: str, user_id: str = None):
+class Porteiro(User):
+    def __init__(self, nome: str, email: str, senha: str, turno: str, user_id: str = None):
         super().__init__(nome, email, senha, user_id)
-        self.apartamento = apartamento
-    
+        self.turno =turno  
+
     def get_tipo(self) :
-        return "sindico"
+        return "porteiro"
     
 
     def to_dict(self, incluir_senha=False):
         data = super().to_dict(incluir_senha)
-        data["apartamento"] = self.apartamento
+        data["turno"] = self.turno
         return data
     
     def emitir_comunicado(self, titulo: str, mensagem: str):
         return(f"COMUNICADO DO CONDOMÍNIO\n"
                f"{titulo}"
-               f"Autor: Síndico(a) {self.nome}\n"
+               f"Autor: Porteiro(a): {self.nome}\n"
                f"{mensagem}\n"
                f"Muito obrigado e tenham um bom dia!")
     
@@ -109,13 +109,13 @@ class UserModel:
                             senha=item.get("senha"),
                             apartamento=item.get("apartamento")
                         )
-                    elif tipo == "sindico":
-                        user = Sindico(
+                    elif tipo == "porteiro":
+                        user = Porteiro(
                             user_id=item.get("id"),
                             nome=item.get("nome"),
                             email=item.get("email"),
                             senha=item.get("senha"),
-                            apartamento=item.get("apartamento")
+                            turno=item.get("turno")
                         )
                     
                     # Só vai adiciona se criou um usuário válido

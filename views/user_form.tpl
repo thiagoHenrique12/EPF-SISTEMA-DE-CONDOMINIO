@@ -27,15 +27,22 @@
             <label for="tipo">Tipo de Usuário:</label>
             <select name="tipo" id="tipo" required style="width: 100%; padding: 8px;">
                 <option value="morador">Morador</option>
-                <option value="sindico">Síndico</option>
+                <option value="porteiro">Porteiro</option>
             </select>
         </div>
+
         % end
 
         <div class="form-group">
             <label for="apartamento">Apartamento / Bloco:</label>
-            <input type="text" id="apartamento" name="apartamento" required 
+            <input type="text" id="apartamento" name="apartamento"  
                    value="{{user.apartamento if user and hasattr(user, 'apartamento') else ''}}">
+        </div>
+
+        <div class="form-group">
+            <label for="turno">Turno :</label>
+            <input type="text" id="turno" name="turno" 
+                   value="{{user.turno if user and hasattr(user, 'turno') else ''}}">
         </div>
 
         <div class="form-actions">

@@ -40,6 +40,9 @@ class UserController(BaseController):
             if hasattr(user, 'apartamento'):
                 user.apartamento = request.forms.get('apartamento')
             
+            if hasattr(user, 'turno'):
+                user.turno = request.forms.get('turno')
+            
             self.user_service.update_user(user)
             return self.redirect('/users')
 

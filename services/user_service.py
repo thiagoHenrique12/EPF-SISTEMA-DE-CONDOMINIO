@@ -1,5 +1,5 @@
 from bottle import request
-from models.user import UserModel, Morador, Sindico
+from models.user import UserModel, Morador, Porteiro
 
 class UserService:
     def __init__(self):
@@ -18,13 +18,13 @@ class UserService:
         senha = request.forms.get('senha')
         tipo = request.forms.get('tipo')
         apartamento = request.forms.get('apartamento')
+        turno = request.forms.get('turno')
 
-       # até o momento os atributos de ambas as heranças são os mesmos, mas futuramente isso provavelmente vai musar
         novo_user = None
         if tipo == 'morador':
             novo_user = Morador(nome=nome, email=email, senha=senha, apartamento=apartamento)
-        elif tipo == 'sindico':
-            novo_user = Sindico(nome=nome, email=email, senha=senha, apartamento=apartamento)
+        elif tipo == 'porteiro':
+            novo_user = Porteiro(nome=nome, email=email, senha=senha, turno=turno)
     
         if novo_user:
             self.user_model.add_user(novo_user)
