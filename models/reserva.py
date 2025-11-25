@@ -120,7 +120,8 @@ class ReservaModel:
          reservas_do_dia = []
          for r in self.reservas:
              if r.data_inicio.startswith(data_str) and r.status != StatusReserva.CANCELADA.value:
-                 if recurso is None r.recurso == recurso:
+                 if recurso is None:
+                     r.recurso == recurso
                      reservas_do_dia.append(r)
          return reservas_do_dia
      
