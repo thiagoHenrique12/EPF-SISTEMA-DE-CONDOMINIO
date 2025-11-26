@@ -1,9 +1,6 @@
 import json
 import uuid
 import os
-from dataclasses import dataclass, asdict
-from typing import List
-from user import User
 from datetime import datetime
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data')
@@ -12,9 +9,10 @@ if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 
 class Entrega:
-    def __init__(self, entrega_id: str, descricao: str, morador_id: str, 
-                 data_chegada: str = None, retirada: str=None, entrega: str= None):
-        self.entrega_id = entrega_id if entrega_id else str(uuid.uuid4())
+    def __init__(self, descricao: str, morador_id: str, 
+                 entrega_id: str = None, data_chegada: str = None, retirada: str = None):
+        
+        self.id = entrega_id if entrega_id else str(uuid.uuid4())
         self.descricao = descricao
         self.morador_id = morador_id
 
@@ -22,7 +20,8 @@ class Entrega:
             self.data_chegada = data_chegada
         else:
             self.data_chegada = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.retirada
+            
+        self.retirada = retirada
 
     def registrar_retirada(self):
         self.retirada = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -30,19 +29,19 @@ class Entrega:
     def esta_pendente(self):
         return self.retirada is None
     
-    def __rept__(self):
+    def __repr__(self):
         status = "Entregue" if self.retirada else "Pendente"
         return f"Entrega(id={self.id}, desc={self.descricao}, morador={self.morador_id}, status={status})"
 
-
     def to_dict(self):
-        return {'id': self.id,'descricao': self.descricao,'morador_id': self.morador_id, 'data_chegada': self.data_chegada,
-'retirada': self.retirada}
+        return {
+            "id": self.id,"descricao": self.descricao,"morador_id": self.morador_id, "data_chegada": self.data_chegada,"retirada": self.retirada
+        }
 
     @staticmethod
     def from_dict(data):
-        return Entrega(entrega_id=data.get('id'), descricao=data.get('descricao'), morador_id=data.get('morador_id'),
-data_chegada=data.get('data_chegada'), retirada=data.get('retirada')) 
+        return Entrega(entrega_id=data.get("id"), descricao=data.get("descricao"), morador_id=data.get("morador_id"),data_chegada=data.get("data_chegada"), 
+            retirada=data.get("retirada")) 
 
 class EntregaModel:
     FILE_PATH = os.path.join(DATA_DIR, 'entregas.json')
@@ -84,10 +83,11 @@ class EntregaModel:
     
     def update_entrega(self, updated_entrega: Entrega):
         for i, entrega in enumerate(self.entregas):
-            if entrega.id==updated_entrega.id:
-                self.entregas[i]=updated_entrega
-                self.__save()
+            if entrega.id == updated_entrega.id:
+                self.entregas[i] = updated_entrega
+                self._save()
                 break
+
     def registrar_retirada(self, entrega_id: str):
         entrega = self.get_by_id(entrega_id)
         if entrega:
@@ -98,11 +98,10 @@ class EntregaModel:
 
     def delete_entrega(self, entrega_id: str):
         initial_len = len(self.entregas)
-        self.entregas= [e for e in self.entregas if e.id != entrega_id]
+        self.entregas = [e for e in self.entregas if e.id != entrega_id]
         if len(self.entregas) < initial_len:
-            self.__save()
+            self._save()
             return True
         return False
 
-    
-
+entrega_model = EntregaModel()
