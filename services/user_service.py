@@ -12,7 +12,6 @@ class UserService:
         return self.user_model.get_by_id(user_id)
 
     def save(self):
-        # Pegando os dados do formulário
         nome = request.forms.get('nome')
         email = request.forms.get('email')
         senha = request.forms.get('senha')
