@@ -97,7 +97,7 @@
         <!-- Seção de Reservas (Preparada para o Futuro) -->
         <div class="section-card">
             <h3>📅 Suas Reservas</h3>
-            <p style="color: #999;">Funcionalidade de visualização de reservas será implementada em breve.</p>
+            <p style="color: #999;">Aquivamos colocar a visualição de reservas Thiaguito bala tensa.</p>
         </div>
 
     </div>
