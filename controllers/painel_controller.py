@@ -8,11 +8,13 @@ from models.reserva import reserva_model
 class PainelController(BaseController):
     @route("/painel", method="GET")
     def dashboard(self):
-        user_id = request.get.cookie("user_id", secret="minha_chave_segura")
+        user_id = request.get_cookie("user_id", secret="chave_segura")
 
         if not user_id:
             return redirect("/login")
-        usuario = UserService.get_by_id(user_id)
+        
+        user_service = UserService()
+        usuario = user_service.get_by_id(user_id)
 
         if not usuario:
             return redirect("/logout")

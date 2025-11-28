@@ -10,7 +10,7 @@ class LoginController(BaseController):
     @route('/login', method='GET')
     def login_form(self):
         if request.get_cookie("user_id", secret='chave_segura'):
-            return redirect('/')
+            return redirect('/painel')
             
         return self.render('login', title="Entrar no Sistema")
 
@@ -22,12 +22,13 @@ class LoginController(BaseController):
 
         if usuario:
             response.set_cookie("user_id", usuario.id, secret='chave_segura', path='/')
-            if usuario.get_tipo() == "porteiro" or usuario.get_tipo() == "sindico":
+            if usuario.get_tipo() == "porteiro":
                     return redirect('/users')
             else:
                     return redirect('/painel')
         else:
                 return self.render('login', title="Entrar", error="Email ou senha incorretos.")
+
 
     @route("/register", method="GET")
     def register_form(self):
