@@ -1,8 +1,9 @@
-from bottle import route, request, redirect
+from bottle import Bottle, route, request, redirect
 from controllers.base_controller import BaseController
 from services.user_service import UserService
 from models.entrega import entrega_model
 from models.reserva import reserva_model
+
 
 class PainelController(BaseController):
     @route("/painel", method="GET")
@@ -17,6 +18,8 @@ class PainelController(BaseController):
             return redirect("/logout")
         minhas_entregas = entrega_model.get_by_morador(usuario.id)
 
-        return sel.render("painel", usuario=usuario, entregas=minhas_entregas, title="Painel do Morador")
-painel_controller = PainelController()   
-    
+        return self.render("painel", usuario=usuario, entregas=minhas_entregas, title="Painel do Morador")
+
+painel_routes = Bottle()
+
+painel_controller = PainelController(painel_routes)

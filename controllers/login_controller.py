@@ -1,7 +1,7 @@
 from bottle import route, request, redirect, response
 from controllers.base_controller import BaseController
 from services.auth_service import auth_service
-from models.user import UserModel, Morador, UserRole
+from models.user import UserModel, Morador
 
 class LoginController(BaseController):
     def __init__(self):
