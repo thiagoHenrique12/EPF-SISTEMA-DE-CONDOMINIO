@@ -36,20 +36,33 @@ class LoginController(BaseController):
     
     @route("/register", method="POST")
     def do_register(self):
+         print("➡️ INICIANDO REGISTRO...") # RASTREADOR 1
          nome = request.forms.get("nome")
          email = request.forms.get("email")
          senha = request.forms.get("senha")
          apartamento= request.forms.get("apartamento")
+         print(f"📦 DADOS RECEBIDOS: Nome={nome}, Email={email}, Apto={apartamento}") # RASTREADOR 2
 
-         if not nome or not not email or not senha or not apartamento:
+         if not nome or not email or not senha or not apartamento:
+              print("❌ ERRO: Campos obrigatórios faltando!") # RASTREADOR 3
               return self.render("register", error="Todos os campos são obrigatórios.", title="Criar Conta")
+         
+         #verificando se esse email ja foi cadastrado
+         usuario_existente = self.user_model.get_by_email(email)
+         
+         if usuario_existente:
+            print("❌ ERRO: Email já existe!") # RASTREADOR 4
+            return self.render("register", title="Criar Conta", error="Este e-mail já está cadastrado!")
+         
          novo_morador= Morador(nome=nome, email=email, senha=senha, apartamento=apartamento)
          self.user_model.add_user(novo_morador)
          return redirect("/login")
+    
     
     @route("/logout", method="GET")
     def logout(self):
          response.delete_cookie("user_id", path='/')
          return redirect("/login")
+    
 
 login_controller = LoginController()
