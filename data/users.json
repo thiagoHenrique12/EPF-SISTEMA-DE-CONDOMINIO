@@ -7,7 +7,6 @@
         "senha": "12e2",
         "apartamento": "103"
     },
-
     {
         "id": "24d97a3e-b843-492c-904e-6a88c400f4e0",
         "nome": "Porteiro Mestre",
@@ -15,6 +14,13 @@
         "tipo": "porteiro",
         "senha": "1",
         "turno": "diurno"
+    },
+    {
+        "id": "d8b08a30-621c-47c0-94d2-8ec816f26606",
+        "nome": "Luiz pulador de catraca",
+        "email": "pula@gmail",
+        "tipo": "morador",
+        "senha": "111",
+        "apartamento": "007"
     }
- 
 ]

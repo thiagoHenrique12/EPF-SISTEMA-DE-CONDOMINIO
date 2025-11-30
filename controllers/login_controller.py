@@ -9,8 +9,16 @@ class LoginController(BaseController):
 
     @route('/login', method='GET')
     def login_form(self):
-        if request.get_cookie("user_id", secret='chave_segura'):
-            return redirect('/painel')
+
+        user_id= request.get_cookie("user_id", secret='chave_segura')
+        if user_id:
+             user = self.user_model.get_by_id(user_id)
+             if user:
+                  if user.get_tipo() == 'porteiro':
+                       return redirect('/users')
+                  
+                  return redirect('/painel')
+        
             
         return self.render('login', title="Entrar no Sistema")
 
@@ -36,22 +44,22 @@ class LoginController(BaseController):
     
     @route("/register", method="POST")
     def do_register(self):
-         print("➡️ INICIANDO REGISTRO...") # RASTREADOR 1
+    
          nome = request.forms.get("nome")
          email = request.forms.get("email")
          senha = request.forms.get("senha")
          apartamento= request.forms.get("apartamento")
-         print(f"📦 DADOS RECEBIDOS: Nome={nome}, Email={email}, Apto={apartamento}") # RASTREADOR 2
+
 
          if not nome or not email or not senha or not apartamento:
-              print("❌ ERRO: Campos obrigatórios faltando!") # RASTREADOR 3
+
               return self.render("register", error="Todos os campos são obrigatórios.", title="Criar Conta")
          
          #verificando se esse email ja foi cadastrado
          usuario_existente = self.user_model.get_by_email(email)
          
          if usuario_existente:
-            print("❌ ERRO: Email já existe!") # RASTREADOR 4
+           
             return self.render("register", title="Criar Conta", error="Este e-mail já está cadastrado!")
          
          novo_morador= Morador(nome=nome, email=email, senha=senha, apartamento=apartamento)
