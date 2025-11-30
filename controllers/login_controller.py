@@ -15,7 +15,7 @@ class LoginController(BaseController):
              user = self.user_model.get_by_id(user_id)
              if user:
                   if user.get_tipo() == 'porteiro':
-                       return redirect('/users')
+                       return redirect('/portaria')
                   
                   elif user.get_tipo() == "morador":
                     return redirect('/painel')
@@ -34,7 +34,7 @@ class LoginController(BaseController):
         if usuario:
             response.set_cookie("user_id", usuario.id, secret='chave_segura', path='/')
             if usuario.get_tipo() == "porteiro":
-                    return redirect('/users')
+                    return redirect('/portaria')
             else:
                     return redirect('/painel')
         else:

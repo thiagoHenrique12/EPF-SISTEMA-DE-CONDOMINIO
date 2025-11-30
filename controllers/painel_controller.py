@@ -18,7 +18,7 @@ class PainelController(BaseController):
 
         #metodo de segurança para nao fazer o programa quebrar caso um porteiro logado digite o caminho /painel
         if usuario.get_tipo() == 'porteiro':
-            return redirect('/users')
+            return redirect('/portaria')
 
         if not usuario:
             return redirect("/logout")

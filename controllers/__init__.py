@@ -4,6 +4,7 @@ from controllers.user_controller import user_routes
 from controllers.user_controller import user_controller
 from controllers.login_controller import login_controller
 from controllers.painel_controller import painel_controller
+from controllers.portaria_controller import portaria_controller
 
 def init_controllers(app: Bottle):
     print('🔧 Configurando rotas dos controladores...')
@@ -19,6 +20,8 @@ def init_controllers(app: Bottle):
     app.route('/logout',   method='GET',  callback=login_controller.logout)
 
     app.route('/painel',   method='GET',  callback=painel_controller.dashboard)
+
+    app.route('/portaria', method='GET', callback=portaria_controller.dashboard)
 
     app.route('/users',                method='GET',  callback=user_controller.list_users)
     #user_form não foi implementado ainda
