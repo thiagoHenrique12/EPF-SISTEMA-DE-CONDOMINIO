@@ -17,7 +17,10 @@ class LoginController(BaseController):
                   if user.get_tipo() == 'porteiro':
                        return redirect('/users')
                   
-                  return redirect('/painel')
+                  elif user.get_tipo() == "morador":
+                    return redirect('/painel')
+             
+             return self.render('login', title="Entrar no Sistema")
         
             
         return self.render('login', title="Entrar no Sistema")

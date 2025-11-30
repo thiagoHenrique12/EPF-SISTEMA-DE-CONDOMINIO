@@ -16,17 +16,25 @@ class UserController(BaseController):
         self.app.route('/users/delete/<user_id>', method='POST', callback=self.delete_user)
 
     def list_users(self):
+        self.verificar_permissao_porteiro()
+
         users = self.user_service.get_all()
         return self.render('users', users=users)
 
+
     def add_user(self):
+        self.verificar_permissao_porteiro()
+
         if request.method == 'GET':
             return self.render('user_form', user=None, action="/users/add")
         else:
             self.user_service.save()
             return self.redirect('/users')
 
+
     def edit_user(self, user_id):
+        self.verificar_permissao_porteiro()
+
         user = self.user_service.get_by_id(user_id)
         if not user:
             return "Usuário não encontrado"
@@ -46,9 +54,25 @@ class UserController(BaseController):
             self.user_service.update_user(user)
             return self.redirect('/users')
 
+
     def delete_user(self, user_id):
+        self.verificar_permissao_porteiro()
+
         self.user_service.delete_user(user_id)
         return self.redirect('/users')
+    
+    
+    #esse metodo de segurança vai garantir que apenas porteiros acessem a area de porteiros
+    def verificar_permissao_porteiro(self):
+        user_id = request.get_cookie("user_id", secret='chave_segura') 
+        
+        if not user_id:
+            return self.redirect('/login')
+            
+        usuario = self.user_service.get_by_id(user_id)
+        
+        if not usuario or usuario.get_tipo() != 'porteiro':
+            return self.redirect('/painel')
 
 
 from bottle import Bottle

@@ -16,6 +16,10 @@ class PainelController(BaseController):
         user_service = UserService()
         usuario = user_service.get_by_id(user_id)
 
+        #metodo de segurança para nao fazer o programa quebrar caso um porteiro logado digite o caminho /painel
+        if usuario.get_tipo() == 'porteiro':
+            return redirect('/users')
+
         if not usuario:
             return redirect("/logout")
         minhas_entregas = entrega_model.get_by_morador(usuario.id)
