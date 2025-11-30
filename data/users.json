@@ -14,13 +14,5 @@
         "tipo": "porteiro",
         "senha": "1",
         "turno": "diurno"
-    },
-    {
-        "id": "d8b08a30-621c-47c0-94d2-8ec816f26606",
-        "nome": "Luiz pulador de catraca",
-        "email": "pula@gmail",
-        "tipo": "morador",
-        "senha": "111",
-        "apartamento": "007"
     }
 ]

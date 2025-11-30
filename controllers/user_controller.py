@@ -6,21 +6,31 @@ class UserController(BaseController):
     def __init__(self, app):
         super().__init__(app)
         self.user_service = UserService()
-        self.setup_routes()
+     #   self.setup_routes()
 
-    def setup_routes(self):
+    # def setup_routes(self):
     
-        self.app.route('/users', method='GET', callback=self.list_users)
-        self.app.route('/users/add', method=['GET', 'POST'], callback=self.add_user)
-        self.app.route('/users/edit/<user_id>', method=['GET', 'POST'], callback=self.edit_user)
-        self.app.route('/users/delete/<user_id>', method='POST', callback=self.delete_user)
+    #     self.app.route('/users', method='GET', callback=self.list_users)
+    #     self.app.route('/users/add', method=['GET', 'POST'], callback=self.add_user)
+    #     self.app.route('/users/edit/<user_id>', method=['GET', 'POST'], callback=self.edit_user)
+    #     self.app.route('/users/delete/<user_id>', method=['GET', 'POST'], callback=self.delete_user)
+
+
+    #pelo oq entendi isso daqui nao é necessario pois ja tem as rotas no init, se acontecer algum erro descomenta a função e o 
+    # atributo de UserController para testar
 
     def list_users(self):
         self.verificar_permissao_porteiro()
 
-        users = self.user_service.get_all()
-        return self.render('users', users=users)
+        nome_buscado = request.query.get('q')# diretamente ligado ao html e a caixa de pesquisa que ele vai criar
 
+        if nome_buscado:
+            users = self.user_service.filtrar_por_nome(nome_buscado)
+        else:
+            users = self.user_service.get_all()
+
+        return self.render('users', users=users, nome_buscado=nome_buscado)
+    
 
     def add_user(self):
         self.verificar_permissao_porteiro()
