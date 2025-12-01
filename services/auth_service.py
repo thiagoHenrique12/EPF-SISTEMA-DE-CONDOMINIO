@@ -1,6 +1,5 @@
 from models.user import UserModel
 
-
 class AuthService:
     def __init__(self):
         self.user_model = UserModel()
