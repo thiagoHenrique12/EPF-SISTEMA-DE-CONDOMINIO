@@ -37,3 +37,12 @@ class UserService:
         self.user_model.delete_user(user_id)
 
 
+    def filtrar_por_nome(self, nome_buscado):
+        todos_usuarios = self.get_all()
+        
+        if not nome_buscado:
+            return todos_usuarios
+        
+        return [u for u in todos_usuarios if nome_buscado.lower() in u.nome.lower()]
+
+

@@ -135,13 +135,16 @@ class UserModel:
 
 
     def get_all(self):
+        self.users = self._load()
         return self.users
 
     def get_by_email(self, email :str):
+        self.users = self._load()
         return next((u for u in self.users if u.email == email), None)
     
 
     def get_by_id(self, user_id: str):
+        self.users = self._load()
         return next((u for u in self.users if u.id == user_id), None)
 
 

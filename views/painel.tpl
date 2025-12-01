@@ -55,7 +55,7 @@
         <div class="welcome-banner">
             <h2 style="margin: 0;">Olá, {{usuario.nome}}!</h2>
             <!-- .capitalize() deixa a primeira letra maiúscula (ex: morador -> Morador) -->
-            <p style="margin: 5px 0 0;">Unidade: <strong>{{usuario.apartamento}}</strong> | Tipo: {{usuario.tipo.capitalize()}}</p>
+            <p style="margin: 5px 0 0;">Unidade: <strong>{{usuario.apartamento}}</strong> |Tipo: {{usuario.get_tipo().capitalize()}}</p>
         </div>
 
         <!-- Seção de Encomendas -->

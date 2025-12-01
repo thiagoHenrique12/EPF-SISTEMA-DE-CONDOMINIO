@@ -20,7 +20,8 @@ class App:
             host=self.config.HOST,
             port=self.config.PORT,
             debug=self.config.DEBUG,
-            reloader=self.config.RELOADER
+            reloader=self.config.RELOADER,
+            server='paste' 
         )
 
 

@@ -5,6 +5,14 @@
         "email": "thiagohenriquems12@gmail.com",
         "tipo": "morador",
         "senha": "12e2",
-        "apartamento": "103"
+        "apartamento": "11"
+    },
+    {
+        "id": "24d97a3e-b843-492c-904e-6a88c400f4e0",
+        "nome": "Porteiro Mestre",
+        "email": "portaria@gmail.com",
+        "tipo": "porteiro",
+        "senha": "1",
+        "turno": "diurno"
     }
 ]
