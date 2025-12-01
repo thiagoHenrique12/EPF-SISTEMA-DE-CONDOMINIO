@@ -23,12 +23,13 @@ def init_controllers(app: Bottle):
 
     app.route('/portaria', method='GET', callback=portaria_controller.dashboard)
 
-    app.route('/users',                method='GET',  callback=user_controller.list_users)
+    app.route('/portaria/users',                method='GET',  callback=user_controller.list_users)
     #user_form não foi implementado ainda
     # app.route('/users/new',            method='GET',  callback=user_controller.new_user_form)
-    app.route('/users/add', method=['GET', 'POST'], callback=user_controller.add_user)   
-  
-    app.route('/users/edit/<user_id>', method=['GET', 'POST'], callback=user_controller.edit_user)
+    app.route('/portaria/users/add', method=['GET', 'POST'], callback=user_controller.add_user)   
+    app.route('/portaria/users/delete/<user_id>', method=['GET', 'POST'], callback=user_controller.delete_user)
+
+    app.route('/portaria/users/edit/<user_id>', method=['GET', 'POST'], callback=user_controller.edit_user)
 
     print('✅ Todas as rotas registradas com sucesso!')
 

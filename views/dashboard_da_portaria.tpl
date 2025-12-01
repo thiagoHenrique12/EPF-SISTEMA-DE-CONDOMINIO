@@ -32,7 +32,7 @@
             <div class="card-body">
                 <h5 class="card-title">👥 Moradores & Funcionários</h5>
                 <p class="card-text">Cadastrar, editar ou remover usuários do sistema.</p>
-                <a href="/users" class="btn btn-primary" style="width: 100%;">Gerenciar Usuários</a>
+                <a href="/portaria/users" class="btn btn-primary" style="width: 100%;">Gerenciar Usuários</a>
             </div>
         </div>
 

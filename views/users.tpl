@@ -10,14 +10,14 @@
                 ⬅ Voltar
             </a>
             
-            <a href="/users/add" style="background-color: #28a745; color: white; text-decoration: none; padding: 8px 15px; border-radius: 4px; font-weight: bold;">
+            <a href="/portaria/users/add" style="background-color: #28a745; color: white; text-decoration: none; padding: 8px 15px; border-radius: 4px; font-weight: bold;">
                 + Novo Usuário
             </a>
         </div>
     </div>
 
     <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #ddd;">
-        <form action="/users" method="get" style="display: flex; gap: 10px;">
+        <form action="/portaria/users" method="get" style="display: flex; gap: 10px;">
             <input type="text" name="q" value="{{nome_buscado or ''}}" placeholder="Buscar por nome..." 
                    style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
             
@@ -26,7 +26,7 @@
             </button>
             
             % if nome_buscado:
-                <a href="/users" style="padding: 8px 15px; color: #dc3545; text-decoration: none; border: 1px solid #dc3545; border-radius: 4px;">
+                <a href="/portaria/users" style="padding: 8px 15px; color: #dc3545; text-decoration: none; border: 1px solid #dc3545; border-radius: 4px;">
                     Limpar
                 </a>
             % end
@@ -68,11 +68,11 @@
                 </td>
                 
                 <td style="padding: 10px; text-align: center;">
-                    <a href="/users/edit/{{u.id}}" style="text-decoration: none; color: #ffc107; font-weight: bold; margin-right: 10px;">
+                    <a href="/portaria/users/edit/{{u.id}}" style="text-decoration: none; color: #ffc107; font-weight: bold; margin-right: 10px;">
                         Editar
                     </a>
                     
-                    <form action="/users/delete/{{u.id}}" method="post" style="display:inline;">
+                    <form action="/portaria/users/delete/{{u.id}}" method="post" style="display:inline;">
                         <button type="submit" onclick="return confirm('Tem certeza que deseja excluir {{u.nome}}?')" 
                                 style="background: none; border: none; color: #dc3545; font-weight: bold; cursor: pointer; padding: 0;">
                             Excluir

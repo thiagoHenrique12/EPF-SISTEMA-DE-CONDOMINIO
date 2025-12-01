@@ -36,10 +36,10 @@ class UserController(BaseController):
         self.verificar_permissao_porteiro()
 
         if request.method == 'GET':
-            return self.render('user_form', user=None, action="/users/add")
+            return self.render('user_form', user=None, action="/portaria/users/add")
         else:
             self.user_service.save()
-            return self.redirect('/users')
+            return self.redirect('/portaria/users')
 
 
     def edit_user(self, user_id):
@@ -50,7 +50,7 @@ class UserController(BaseController):
             return "Usuário não encontrado"
 
         if request.method == 'GET':
-            return self.render('user_form', user=user, action=f"/users/edit/{user_id}")
+            return self.render('user_form', user=user, action=f"/portaria/users/edit/{user_id}")
         else:
             user.nome = request.forms.get('nome')
             user.email = request.forms.get('email')
@@ -62,14 +62,14 @@ class UserController(BaseController):
                 user.turno = request.forms.get('turno')
             
             self.user_service.update_user(user)
-            return self.redirect('/users')
+            return self.redirect('/portaria/users')
 
 
     def delete_user(self, user_id):
         self.verificar_permissao_porteiro()
 
         self.user_service.delete_user(user_id)
-        return self.redirect('/users')
+        return self.redirect('/portaria/users')
     
     
     #esse metodo de segurança vai garantir que apenas porteiros acessem a area de porteiros

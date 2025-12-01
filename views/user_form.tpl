@@ -47,7 +47,7 @@
 
         <div class="form-actions">
             <button type="submit" class="btn-submit">Salvar</button>
-            <a href="/users" class="btn-cancel">Voltar</a>
+            <a href="/portaria/users" class="btn-cancel">Voltar</a>
         </div>
     </form>
 </section>
