@@ -19,9 +19,16 @@ class PortariaController(BaseController):
         if not user_id:
             return redirect('/login')
 
+
         usuario = self.user_service.get_by_id(user_id)
-        if not usuario or usuario.get_tipo() != 'porteiro':
+
+        if not usuario:
+            return redirect('/logout')
+        
+        
+        if usuario.get_tipo() != 'porteiro':
             return redirect('/painel')
+    
 
         return self.render('dashboard_da_portaria', usuario=usuario)
 

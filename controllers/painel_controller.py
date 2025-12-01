@@ -11,7 +11,7 @@ class PainelController(BaseController):
         user_id = request.get_cookie("user_id", secret="chave_segura")
 
         if not user_id:
-            return redirect("/login")
+            return redirect("/logout")
         
         user_service = UserService()
         usuario = user_service.get_by_id(user_id)

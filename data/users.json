@@ -14,21 +14,5 @@
         "tipo": "porteiro",
         "senha": "1",
         "turno": "diurno"
-    },
-    {
-        "id": "05e5b73a-5682-4d5f-9801-7fde54759543",
-        "nome": "dwd",
-        "email": "apagar@gmail.com",
-        "tipo": "morador",
-        "senha": "3",
-        "apartamento": "105"
-    },
-    {
-        "id": "29e940e3-8256-48e1-aad6-3747a6455b40",
-        "nome": "csc",
-        "email": "apagar2@gmail.com",
-        "tipo": "morador",
-        "senha": "3",
-        "apartamento": "111"
     }
 ]
