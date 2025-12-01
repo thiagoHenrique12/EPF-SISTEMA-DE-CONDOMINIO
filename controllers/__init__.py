@@ -1,5 +1,5 @@
 from bottle import Bottle
-from bottle import redirect
+from bottle import redirect, static_file
 from controllers.user_controller import user_routes
 from controllers.user_controller import user_controller
 from controllers.login_controller import login_controller
@@ -12,6 +12,11 @@ def init_controllers(app: Bottle):
     @app.route('/')
     def index():
         return redirect('/login')
+    
+    @app.route('/static/<filepath:path>')
+    def serve_static(filepath):
+        # Isso diz: "Busque o arquivo dentro da pasta 'static' do projeto"
+        return static_file(filepath, root='./static')
 
     app.route('/login',    method='GET',  callback=login_controller.login_form)
     app.route('/login',    method='POST', callback=login_controller.do_login)
