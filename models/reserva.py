@@ -40,13 +40,22 @@ class Reserva:
     
     def to_dict(self):
         return {
-            "id": self.id, "recurso": self.recurso, "morador_id": self.morador_id,"data_inicio": self.data_inicio,"data_fim": self.data_fim, "status": self.status
+            "id": self.id, 
+            "recurso": self.recurso, 
+            "morador_id": self.morador_id, 
+            "data_inicio": self.data_inicio,
+            "data_fim": self.data_fim, 
+            "status": self.status
         }
     
     @staticmethod
     def from_dict(data):
         return Reserva(
-            reserva_id=data.get("id"), recurso=data.get("recurso"), morador_id=data.get("morador_id"), data_inicio=data.get("data_inicio"), data_fim=data.get("data_fim"), 
+            reserva_id=data.get("id"), 
+            recurso=data.get("recurso"), 
+            morador_id=data.get("morador_id"), 
+            data_inicio=data.get("data_inicio"), 
+            data_fim=data.get("data_fim"), 
             status=data.get("status", StatusReserva.CONFIRMADA.value)
         )
 
@@ -104,13 +113,14 @@ class ReservaModel:
             inicio_nova = datetime.strptime(inicio_str, formato)
             fim_nova = datetime.strptime(fim_str, formato)
         except ValueError:
-            print("Erro de formato de data. AAAA-MM-DD HH:MM")
+            print("Erro de formato de data. Use AAAA-MM-DD HH:MM")
             return False
          
         for r in self.reservas:
             if r.recurso == recurso and r.status != StatusReserva.CANCELADA.value:
                 inicio_existente = datetime.strptime(r.data_inicio, formato)
                 fim_existente = datetime.strptime(r.data_fim, formato)
+
                 if inicio_nova < fim_existente and inicio_existente < fim_nova:
                     return False
         return True
