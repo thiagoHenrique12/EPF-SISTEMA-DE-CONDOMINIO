@@ -5,6 +5,7 @@ from controllers.user_controller import user_controller
 from controllers.login_controller import login_controller
 from controllers.painel_controller import painel_controller
 from controllers.portaria_controller import portaria_controller
+from controllers.entrega_controller import entrega_controller
 
 def init_controllers(app: Bottle):
     print('🔧 Configurando rotas dos controladores...')
@@ -25,16 +26,19 @@ def init_controllers(app: Bottle):
     app.route('/logout',   method='GET',  callback=login_controller.logout)
 
     app.route('/painel',   method='GET',  callback=painel_controller.dashboard)
-
     app.route('/portaria', method='GET', callback=portaria_controller.dashboard)
 
-    app.route('/portaria/users',                method='GET',  callback=user_controller.list_users)
+    app.route('/portaria/users', method='GET',  callback=user_controller.list_users)
     #user_form não foi implementado ainda
     # app.route('/users/new',            method='GET',  callback=user_controller.new_user_form)
     app.route('/portaria/users/add', method=['GET', 'POST'], callback=user_controller.add_user)   
     app.route('/portaria/users/delete/<user_id>', method=['GET', 'POST'], callback=user_controller.delete_user)
-
     app.route('/portaria/users/edit/<user_id>', method=['GET', 'POST'], callback=user_controller.edit_user)
+    
+    app.route('/entregas',method='GET',  callback=entrega_controller.listar_entregas)
+    app.route('/entregas/nova', method='GET',  callback=entrega_controller.nova_entrega_form)
+    app.route('/portaria/nova_entrega', method='POST', callback=entrega_controller.nova_entrega_post) 
+    app.route('/portaria/entregar_pacote/<entrega_id>', method='GET', callback=entrega_controller.confirmar_retirada)
 
     print('✅ Todas as rotas registradas com sucesso!')
 
