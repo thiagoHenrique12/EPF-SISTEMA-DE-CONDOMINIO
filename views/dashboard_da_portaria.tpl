@@ -1,60 +1,46 @@
-<div class="alert alert-info" style="display: flex; justify-content: space-between; align-items: center;">
+% rebase('layout.tpl', title='Painel da Portaria')
+
+<div class="container">
+    
+    <div class="header-box">
+        <div class="header-title">
+            <h2>👮‍♂️ Olá, {{usuario.nome}}!</h2>
+            <div class="header-info">
+                <p>Turno: <strong>{{usuario.turno}}</strong> | Bom trabalho.</p>
+            </div>
+        </div>
         
         <div>
-            <h4 style="margin-bottom: 5px;">👮‍♂️ Olá, {{usuario.nome}}!</h4>
-            <p style="margin: 0;">
-                Turno: <strong>{{usuario.turno}}</strong> | 
-                <span style="font-size: 0.9em;">Bom trabalho.</span>
-            </p>
-        </div>
-
-        <div>
-            <a href="/logout" style="
-                background-color: #cc0000; 
-                color: white; 
-                padding: 10px 20px; 
-                text-decoration: none; 
-                font-weight: bold; 
-                border-radius: 5px; 
-                font-family: Arial, sans-serif;">
-                Sair do Sistema 🚪
-            </a>
+            <a href="/logout" class="btn btn-danger">Sair do Sistema 🚪</a>
         </div>
     </div>
-    <hr>
 
-    <h3>📌 O que deseja fazer?</h3>
-    <br>
+    <h3 class="section-title">📌 Painel de Controle</h3>
 
-    <div class="row" style="display: flex; gap: 20px; flex-wrap: wrap;">
+    <div class="dashboard-grid">
         
-        <div class="card" style="width: 18rem; border: 1px solid #ccc; padding: 15px;">
-            <div class="card-body">
-                <h5 class="card-title">👥 Moradores & Funcionários</h5>
-                <p class="card-text">Cadastrar, editar ou remover usuários do sistema.</p>
-                <a href="/portaria/users" class="btn btn-primary" style="width: 100%;">Gerenciar Usuários</a>
+        <div class="card">
+            <div>
+                <h3>👥 Moradores & Staff</h3>
+                <p>Cadastrar, editar ou remover usuários e moradores do sistema.</p>
             </div>
+            <a href="/portaria/users" class="btn btn-primary btn-full">Gerenciar Usuários</a>
         </div>
 
-        <div class="card" style="width: 18rem; border: 1px solid #ccc; padding: 15px;">
-            <div class="card-body">
-                <h5 class="card-title">📦 Entregas e Encomendas</h5>
-                <p class="card-text">Registrar chegada de pacotes e retiradas.</p>
-                <a href="/portaria/entregas" class="btn btn-primary" style="width: 100%; background-color: #007bff; color: white; text-decoration: none; padding: 10px; display: inline-block; text-align: center; border-radius: 4px;">
-    Gerenciar Entregas
-</a>
+        <div class="card">
+            <div>
+                <h3>📦 Encomendas</h3>
+                <p>Registrar chegada de pacotes e confirmar retiradas.</p>
             </div>
+            <a href="/portaria/entregas" class="btn btn-primary btn-full">Gerenciar Entregas</a>
         </div>
 
-        <div class="card" ...>
-            <div class="card-body">
-                <h5 class="card-title">📅 Reservas de Áreas</h5>
-                <p class="card-text">Aprovar ou rejeitar solicitações.</p>
-                
-                <a href="/portaria/reservas" class="btn btn-primary" style="width: 100%; ...">
-                    Gerenciar Reservas
-                </a>
+        <div class="card">
+            <div>
+                <h3>📅 Reservas</h3>
+                <p>Visualizar calendário, aprovar ou rejeitar solicitações de áreas.</p>
             </div>
+            <a href="/portaria/reservas" class="btn btn-primary btn-full">Gerenciar Reservas</a>
         </div>
 
     </div>

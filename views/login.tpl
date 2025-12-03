@@ -1,36 +1,27 @@
-% rebase('layout.tpl', title='Entrar no Sistema', active='login')
+% rebase('layout.tpl', title='Login')
 
-<div style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+<div class="form-center">
+    <h2 style="text-align: center; margin-bottom: 20px; color: #333;">SISTEMA DE CONDOMÍNIO</h2>
     
-    <h2 style="text-align: center;">🔐 Acesso ao Condomínio</h2>
-    <hr>
-
     % if defined('error') and error:
-        <div style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
-            <strong>Atenção:</strong> {{error}}
-        </div>
+        <div class="alert-error">{{error}}</div>
     % end
 
     <form action="/login" method="post">
+        <div class="form-group">
+            <label class="form-label">E-mail</label>
+            <input type="email" name="email" class="form-control" required placeholder="seu@email.com">
+        </div>
         
-        <div style="margin-bottom: 15px;">
-            <label for="email"><b>E-mail:</b></label><br>
-            <input type="email" id="email" name="email" required style="width: 100%; padding: 8px; box-sizing: border-box;">
+        <div class="form-group">
+            <label class="form-label">Senha</label>
+            <input type="password" name="senha" class="form-control" required>
         </div>
 
-        <div style="margin-bottom: 15px;">
-            <label for="senha"><b>Senha:</b></label><br>
-            <input type="password" id="senha" name="senha" required style="width: 100%; padding: 8px; box-sizing: border-box;">
-        </div>
-
-        <button type="submit" style="width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
-            Entrar
-        </button>
+        <button type="submit" class="btn btn-primary btn-full">Entrar</button>
     </form>
 
-    <br>
-    <div style="text-align: center;">
-        <small>Novo por aqui? <a href="/register">Cadastrar como Morador</a></small>
+    <div style="text-align: center; margin-top: 20px; font-size: 0.9em;">
+        <a href="/register" style="color: #007bff;">Criar conta de Morador</a>
     </div>
-
 </div>

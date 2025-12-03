@@ -11,7 +11,6 @@ if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 
 
-# necessario implementar o encapsulamento e fazer os getters e setters
 class User(ABC):
     def __init__(self, nome: str, email: str, senha: str, user_id: str = None):
         self.id = user_id if user_id else str(uuid.uuid4())
@@ -41,7 +40,8 @@ class User(ABC):
             data["senha"] = self.senha 
         return data
 
-# HERANÇAS
+
+# PARTE DE HERANÇAS:
 
 class Morador(User):
     def __init__(self, nome : str, email : str, senha : str, apartamento: str, user_id :str = None):
@@ -71,13 +71,7 @@ class Porteiro(User):
         data = super().to_dict(incluir_senha)
         data["turno"] = self.turno
         return data
-    
-    def emitir_comunicado(self, titulo: str, mensagem: str):
-        return(f"COMUNICADO DO CONDOMÍNIO\n"
-               f"{titulo}"
-               f"Autor: Porteiro(a): {self.nome}\n"
-               f"{mensagem}\n"
-               f"Muito obrigado e tenham um bom dia!")
+
     
 
 

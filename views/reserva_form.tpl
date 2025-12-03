@@ -1,19 +1,23 @@
 % rebase('layout.tpl', title='Nova Reserva')
 
-<div class="form-container"> <h2 class="form-title">📅 Reservar Área Comum</h2>
+<div class="form-center">
+    
+    <h3 style="margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; color: #333;">
+        📅 Reservar Área Comum
+    </h3>
 
     % if defined('error') and error:
-        <div style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #f5c6cb;">
-            <strong>Erro:</strong> {{error}}
+        <div class="alert-error">
+            <strong>Atenção:</strong> {{error}}
         </div>
     % end
 
     <form action="/morador/reservas/nova" method="post">
         
         <div class="form-group">
-            <label for="recurso" class="form-label">Qual área você quer reservar?</label>
-            <select name="recurso" id="recurso" class="form-control" required>
-                <option value="" disabled selected>Selecione...</option>
+            <label class="form-label">Qual área você quer reservar?</label>
+            <select name="recurso" class="form-control" required>
+                <option value="" disabled selected>Selecione uma opção...</option>
                 % for opcao in recursos:
                     <option value="{{opcao}}">{{opcao}}</option>
                 % end
@@ -21,18 +25,19 @@
         </div>
 
         <div class="form-group">
-            <label for="data_inicio" class="form-label">Data e Hora de Início:</label>
-            <input type="datetime-local" id="data_inicio" name="data_inicio" class="form-control" required>
+            <label class="form-label">Data e Hora de Início:</label>
+            <input type="datetime-local" name="data_inicio" class="form-control" required>
         </div>
 
         <div class="form-group">
-            <label for="data_fim" class="form-label">Data e Hora de Término:</label>
-            <input type="datetime-local" id="data_fim" name="data_fim" class="form-control" required>
+            <label class="form-label">Data e Hora de Término:</label>
+            <input type="datetime-local" name="data_fim" class="form-control" required>
         </div>
 
-        <div class="btn-container">
-            <button type="submit" class="btn-submit">Confirmar Reserva</button>
-            <a href="/morador/reservas" class="btn-cancel">Cancelar</a>
+        <button type="submit" class="btn btn-success btn-full">Confirmar Reserva</button>
+        
+        <div style="text-align: center; margin-top: 15px;">
+            <a href="/morador/reservas" style="color: #666; text-decoration: none; font-size: 14px;">Cancelar</a>
         </div>
 
     </form>
