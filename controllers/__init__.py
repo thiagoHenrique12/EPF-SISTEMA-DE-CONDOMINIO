@@ -5,6 +5,7 @@ from controllers.user_controller import user_controller
 from controllers.login_controller import login_controller
 from controllers.painel_controller import painel_controller
 from controllers.portaria_controller import portaria_controller
+from controllers.entrega_controller import entrega_controller
 
 def init_controllers(app: Bottle):
     print('🔧 Configurando rotas dos controladores...')
@@ -35,6 +36,15 @@ def init_controllers(app: Bottle):
     app.route('/portaria/users/delete/<user_id>', method=['GET', 'POST'], callback=user_controller.delete_user)
 
     app.route('/portaria/users/edit/<user_id>', method=['GET', 'POST'], callback=user_controller.edit_user)
+
+
+
+    app.route('/portaria/entregas', method='GET', callback=entrega_controller.listar_entregas)
+    
+    app.route('/portaria/entregas/nova', method=['GET', 'POST'], callback=entrega_controller.nova_entrega)
+    
+   
+    app.route('/portaria/entregas/confirmar/<entrega_id>', method=['GET', 'POST'], callback=entrega_controller.confirmar_retirada)
 
     print('✅ Todas as rotas registradas com sucesso!')
 

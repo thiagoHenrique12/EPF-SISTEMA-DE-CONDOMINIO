@@ -40,7 +40,9 @@
             <div class="card-body">
                 <h5 class="card-title">📦 Entregas e Encomendas</h5>
                 <p class="card-text">Registrar chegada de pacotes e retiradas.</p>
-                <a href="#" class="btn btn-secondary" style="width: 100%;">Em breve...</a>
+                <a href="/portaria/entregas" class="btn btn-primary" style="width: 100%; background-color: #007bff; color: white; text-decoration: none; padding: 10px; display: inline-block; text-align: center; border-radius: 4px;">
+    Gerenciar Entregas
+</a>
             </div>
         </div>
 
