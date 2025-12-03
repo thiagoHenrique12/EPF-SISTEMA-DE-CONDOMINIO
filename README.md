@@ -86,6 +86,29 @@ python main.py
 4. Accese sua aplicação no navegador em: [http://localhost:8080](http://localhost:8080)
 
 ---
+## :sunglasses: Solução e funcionalidades
+
+Nosso projeto é um sistema para condomínios, voltado tanto para moradores quanto para a portaria. Ele inclui funções como reserva de espaços de lazer e um sistema de controle de entregas: a portaria registra quando algo chega e o morador recebe uma notificação para vir retirar. Pensamos nessa solução para tornar o dia a dia dos moradores mais prático e organizado, facilitando tarefas comuns e melhorando a comunicação dentro do condomínio.
+
+
+## :smiley: Diagrama de classes 
+<img width="778" height="884" alt="image" src="https://github.com/user-attachments/assets/b8ed5f71-23fc-4483-a1fa-c55da7c4acff" />
+
+
+## :technologist: Instruções para Compilação e Execução
+
+Execução:
+
+python main.py
+
+Instalação:
+
+pip install -r requirements.txt 
+
+bottle, paste, pylint
+
+(usamos a ferramenta "paste" para melhor funcionamento do nosso código)
+
 
 ## ✍️ Personalização
 Para adicionar novos modelos (ex: Atividades):
