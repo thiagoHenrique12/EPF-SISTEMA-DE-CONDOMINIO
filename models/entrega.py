@@ -61,20 +61,25 @@ class EntregaModel:
             return []
 
     def _save(self):
+
         with open(self.FILE_PATH, "w", encoding="utf-8") as f:
             data_to_save = [e.to_dict() for e in self.entregas]
             json.dump(data_to_save, f, indent=4, ensure_ascii=False)
     
     def get_all(self):
+        self.entregas = self._load()
         return self.entregas
     
     def get_by_id(self, entrega_id: str):
+        self.entregas = self._load()
         return next((e for e in self.entregas if e.id == entrega_id), None)
     
     def get_by_morador(self, morador_id: str):
+        self.entregas = self._load()
         return [e for e in self.entregas if e.morador_id == morador_id]
 
     def get_pendentes(self):
+        self.entregas = self._load()
         return [e for e in self.entregas if e.esta_pendente()]
 
     def add_entrega(self, entrega: Entrega):
