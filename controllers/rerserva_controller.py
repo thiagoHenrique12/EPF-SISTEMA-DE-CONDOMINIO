@@ -7,9 +7,8 @@ class ReservaController(BaseController):
     def __init__(self, app):
         super().__init__(app)
         self.user_service = UserService()
-        # Rotas no init.py
+ 
 
-    # --- SEGURANÇA ---
     def checar_morador(self):
         user_id = request.get_cookie("user_id", secret='chave_segura')
         if not user_id:
@@ -17,11 +16,11 @@ class ReservaController(BaseController):
         
         usuario = self.user_service.get_by_id(user_id)
         if not usuario or usuario.get_tipo() != 'morador':
-            # Se porteiro tentar reservar, manda pra portaria
+     
             redirect('/portaria')
         return usuario
 
-    # --- AÇÕES ---
+
 
     def minhas_reservas(self):
         usuario = self.checar_morador() # 🔒
@@ -32,19 +31,18 @@ class ReservaController(BaseController):
     def nova_reserva(self):
         usuario = self.checar_morador() # 🔒
         
-        # Pega a lista de recursos do Enum para o Select
+
         opcoes_recursos = [r.value for r in Recurso]
 
         if request.method == 'GET':
             return self.render('reserva_form', recursos=opcoes_recursos, error=None)
         
         else:
-            # POST - Tentativa de Agendar
+    
             recurso = request.forms.get('recurso')
             data_inicio = request.forms.get('data_inicio')
             data_fim = request.forms.get('data_fim')
 
-            # Tenta criar o objeto
             nova_reserva = Reserva(
                 recurso=recurso, 
                 morador_id=usuario.id, 
@@ -52,7 +50,7 @@ class ReservaController(BaseController):
                 data_fim=data_fim
             )
             
-            # Tenta salvar (O Model verifica conflito de horário)
+           
             sucesso = reserva_model.add_reserva(nova_reserva)
             
             if sucesso:
@@ -67,6 +65,39 @@ class ReservaController(BaseController):
         self.checar_morador() # 🔒
         reserva_model.cancelar_reserva(reserva_id)
         return redirect('/morador/reservas')
+    
+
+    #Funcionalidades do porteiro:
+
+    def listar_solicitacoes(self):
+   
+        user_id = request.get_cookie("user_id", secret='chave_segura')
+        if not user_id: redirect('/login')
+        
+        usuario_logado = self.user_service.get_by_id(user_id)
+        if not usuario_logado or usuario_logado.get_tipo() != 'porteiro':
+            redirect('/painel')
+
+        todas_reservas = reserva_model.get_all()
+        
+
+        usuarios = self.user_service.get_all()
+        mapa_usuarios = {u.id: u for u in usuarios}
+
+        return self.render('reservas_portaria', reservas=todas_reservas, usuarios=mapa_usuarios, title="Gestão de Reservas")
+
+    def acao_reserva(self, reserva_id, acao):
+    
+        user_id = request.get_cookie("user_id", secret='chave_segura')
+        if not user_id: redirect('/login')
+        
+
+        if acao == 'aprovar':
+            reserva_model.atualizar_status(reserva_id, 'Confirmada')
+        elif acao == 'rejeitar':
+            reserva_model.atualizar_status(reserva_id, 'Rejeitada')
+      
+        return redirect('/portaria/reservas')
 
 from bottle import Bottle
 reserva_routes = Bottle()

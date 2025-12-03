@@ -46,11 +46,14 @@
             </div>
         </div>
 
-        <div class="card" style="width: 18rem; border: 1px solid #ccc; padding: 15px;">
+        <div class="card" ...>
             <div class="card-body">
                 <h5 class="card-title">📅 Reservas de Áreas</h5>
-                <p class="card-text">Aprovar ou rejeitar solicitações de reservas.</p>
-                <a href="#" class="btn btn-secondary" style="width: 100%;">Em breve...</a>
+                <p class="card-text">Aprovar ou rejeitar solicitações.</p>
+                
+                <a href="/portaria/reservas" class="btn btn-primary" style="width: 100%; ...">
+                    Gerenciar Reservas
+                </a>
             </div>
         </div>
 

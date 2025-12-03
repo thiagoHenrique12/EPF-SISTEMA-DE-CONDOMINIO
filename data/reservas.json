@@ -14,5 +14,21 @@
         "data_inicio": "2025-12-25T00:00",
         "data_fim": "2025-12-25T00:51",
         "status": "Cancelada"
+    },
+    {
+        "id": "a707dac3-7e3b-4bfc-a4dd-6682be54a485",
+        "recurso": "Churrasqueira",
+        "morador_id": "85d97a3e-b843-492c-904e-6a88c400f4e0",
+        "data_inicio": "2025-12-05T23:34",
+        "data_fim": "2025-12-29T23:34",
+        "status": "Cancelada"
+    },
+    {
+        "id": "a6534df3-2912-4791-bc63-b5975165a352",
+        "recurso": "Quadra Poliesportiva",
+        "morador_id": "85d97a3e-b843-492c-904e-6a88c400f4e0",
+        "data_inicio": "2025-12-12T23:56",
+        "data_fim": "2025-12-24T23:56",
+        "status": "Rejeitada"
     }
 ]

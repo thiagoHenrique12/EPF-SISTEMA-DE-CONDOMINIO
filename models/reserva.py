@@ -14,7 +14,7 @@ class Recurso(Enum):
     SALA_JOGOS = "Sala de Jogos"
 
 class Reserva:
-    def __init__(self, recurso: str, morador_id: str, data_inicio: str, data_fim: str, status: str = 'Confirmada', reserva_id: str = None):
+    def __init__(self, recurso: str, morador_id: str, data_inicio: str, data_fim: str, status: str = 'Pendente', reserva_id: str = None):
         self.id = reserva_id if reserva_id else str(uuid.uuid4())
         self.recurso = recurso
         self.morador_id = morador_id
@@ -59,19 +59,24 @@ class ReservaModel:
         except (json.JSONDecodeError, FileNotFoundError, ValueError):
             return []
 
+
     def _save(self):
         with open(self.FILE_PATH, 'w', encoding='utf-8') as f:
             json.dump([r.to_dict() for r in self.reservas], f, indent=4, ensure_ascii=False)
+
+    def get_all(self):
+        self.reservas = self._load() 
+        return self.reservas
+
 
     def get_by_morador(self, morador_id: str):
         self.reservas = self._load() 
         return [r for r in self.reservas if r.morador_id == morador_id]
 
+
     def verificar_disponibilidade(self, recurso, inicio_str, fim_str):
-    
         self.reservas = self._load() 
         
-    
         fmt = "%Y-%m-%dT%H:%M" 
         
         try:
@@ -98,13 +103,7 @@ class ReservaModel:
 
         return True 
 
-    def add_reserva(self, reserva: Reserva):
-      
-        if self.verificar_disponibilidade(reserva.recurso, reserva.data_inicio, reserva.data_fim):
-            self.reservas.append(reserva)
-            self._save()
-            return True
-        return False
+    
 
     def cancelar_reserva(self, reserva_id):
         self.reservas = self._load()
@@ -112,6 +111,23 @@ class ReservaModel:
             if r.id == reserva_id:
                 r.status = 'Cancelada'
                 self._save()
+                return True
+        return False
+    
+    def add_reserva(self, reserva: Reserva):
+        if self.verificar_disponibilidade(reserva.recurso, reserva.data_inicio, reserva.data_fim):
+            self.reservas.append(reserva)
+            self._save()
+            return True 
+        return False 
+    
+   
+    def atualizar_status(self, reserva_id: str, novo_status: str):
+        self.reservas = self._load() 
+        for r in self.reservas:
+            if r.id == reserva_id:
+                r.status = novo_status
+                self._save() 
                 return True
         return False
 
