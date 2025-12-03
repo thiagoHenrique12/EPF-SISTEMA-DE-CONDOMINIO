@@ -82,10 +82,18 @@
             </table>
         % end
     </div>
-
-    <div class="section-card">
-        <h3>📅 Suas Reservas</h3>
-        <p style="color: #999;">O módulo de reservas será implementado em breve.</p>
+    
+<div class="section-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="margin: 0; border: none;">📅 Suas Reservas</h3>
+            <a href="/morador/reservas" style="background-color: #0d6efd; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 0.9em;">
+                Ver Agenda / Reservar
+            </a>
+        </div>
+        
+        <p style="color: #666; font-size: 0.9em;">
+            Agende o salão de festas ou churrasqueira diretamente por aqui.
+        </p>
     </div>
 
 </div>

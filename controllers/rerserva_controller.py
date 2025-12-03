@@ -1,48 +1,73 @@
-from bottle import route, request, redirect
+from bottle import request, redirect
 from controllers.base_controller import BaseController
-from services.user_service import user_service
 from models.reserva import Reserva, reserva_model, Recurso
+from services.user_service import UserService
 
 class ReservaController(BaseController):
+    def __init__(self, app):
+        super().__init__(app)
+        self.user_service = UserService()
+        # Rotas no init.py
 
-    @route('/minhas_reservas', method='GET')
+    # --- SEGURANÇA ---
+    def checar_morador(self):
+        user_id = request.get_cookie("user_id", secret='chave_segura')
+        if not user_id:
+            redirect('/login')
+        
+        usuario = self.user_service.get_by_id(user_id)
+        if not usuario or usuario.get_tipo() != 'morador':
+            # Se porteiro tentar reservar, manda pra portaria
+            redirect('/portaria')
+        return usuario
+
+    # --- AÇÕES ---
+
     def minhas_reservas(self):
-        user_id = request.get_cookie("user_id", secret='minha_chave_secreta_super_segura')
-        if not user_id: return redirect('/login')
+        usuario = self.checar_morador() # 🔒
         
-        usuario = user_service.get_by_id(user_id)
-        if not usuario: return redirect('/login')
         reservas = reserva_model.get_by_morador(usuario.id)
-        return self.render('minhas_reservas', title="Minhas Reservas", usuario=usuario, reservas=reservas)
+        return self.render('reservas', title="Minhas Reservas", usuario=usuario, reservas=reservas)
 
-    @route('/reservas/nova', method='GET')
-    def nova_reserva_form(self):
-        recursos = [r.value for r in Recurso]
-        return self.render('reserva_form', title="Nova Reserva", recursos=recursos)
+    def nova_reserva(self):
+        usuario = self.checar_morador() # 🔒
+        
+        # Pega a lista de recursos do Enum para o Select
+        opcoes_recursos = [r.value for r in Recurso]
 
-    @route('/reservas/nova', method='POST')
-    def nova_reserva_post(self):
-        user_id = request.get_cookie("user_id", secret='minha_chave_secreta_super_segura')
-        if not user_id: return redirect('/login')
-
-        recurso = request.forms.get('recurso')
-        data_inicio = request.forms.get('data_inicio') 
-        data_fim = request.forms.get('data_fim')
-        data_inicio = data_inicio.replace('T', ' ')
-        data_fim = data_fim.replace('T', ' ')
-        nova_reserva = Reserva(recurso=recurso, morador_id=user_id, data_inicio=data_inicio, data_fim=data_fim)
+        if request.method == 'GET':
+            return self.render('reserva_form', recursos=opcoes_recursos, error=None)
         
-        
-        sucesso = reserva_model.add_reserva(nova_reserva)
-        
-        if sucesso:
-            return redirect('/minhas_reservas')
         else:
-            return redirect('/minhas_reservas')
+            # POST - Tentativa de Agendar
+            recurso = request.forms.get('recurso')
+            data_inicio = request.forms.get('data_inicio')
+            data_fim = request.forms.get('data_fim')
 
-    @route('/reservas/cancelar/<reserva_id>', method='GET')
-    def cancelar_reserva(self, reserva_id):
-        reserva_model.cancel_reserva(reserva_id)
-        return redirect('/minhas_reservas')
+            # Tenta criar o objeto
+            nova_reserva = Reserva(
+                recurso=recurso, 
+                morador_id=usuario.id, 
+                data_inicio=data_inicio, 
+                data_fim=data_fim
+            )
+            
+            # Tenta salvar (O Model verifica conflito de horário)
+            sucesso = reserva_model.add_reserva(nova_reserva)
+            
+            if sucesso:
+                print(f"✅ Reserva criada: {recurso} para {usuario.nome}")
+                return redirect('/morador/reservas')
+            else:
+                print("❌ Conflito de horário!")
+                return self.render('reserva_form', recursos=opcoes_recursos, error="⚠️ Horário indisponível ou " \
+                "Já existe uma reserva para este local neste período.")
 
-reserva_controller = ReservaController()
+    def cancelar(self, reserva_id):
+        self.checar_morador() # 🔒
+        reserva_model.cancelar_reserva(reserva_id)
+        return redirect('/morador/reservas')
+
+from bottle import Bottle
+reserva_routes = Bottle()
+reserva_controller = ReservaController(reserva_routes)
